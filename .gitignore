@@ -1,0 +1,16 @@
+.Rproj.user
+.Rhistory
+.RData
+.DS_Store
+# ignore output files
+*.pdf
+*.graphml
+*.html
+*.png
+# ignore these directories
+other/
+zz_archive/
+networks/
+plots/
+output/
+vignettes/*_cache/

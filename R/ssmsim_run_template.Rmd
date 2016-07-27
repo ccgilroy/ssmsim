@@ -1,0 +1,58 @@
+---
+title: "SSM Model Run Template"
+author: "Connor Gilroy"
+date: "February 16, 2016"
+output: html_document
+---
+
+```{r start_model, message=FALSE, warning=FALSE, echo=FALSE}
+## This chunk does all the setup necessary to run the SSM RNetLogo Model. 
+## It loads packages, starts the JVM, sources R functions, starts NetLogo, 
+## and loads the SSM NetLogo model. Code is taken from SSM_Model_Main.R, 
+## but it is NOT guaranteed to be identical to the R script.
+
+options(java.parameters = "-Xmx12288m")  # increase Java heap size. 
+# default heap size is only 512 MB, increase to 12 GB 
+# must do before loading rJava package
+
+library(RNetLogo)  # loads rJava package
+library(plyr)
+library(dplyr)  # plyr MUST be loaded before dplyr
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(igraph)
+
+project.path <- "/Users/cgilroy/Documents/Research/SSM Simulation"
+nl.path <- file.path(project.path, "NetLogo") # "/Applications/NetLogo 5.2.1"
+model.path <- file.path(nl.path, "Coming Out and SSM Support Version 2.nlogo")
+networks.path <- file.path(project.path, "networks")
+if (!dir.exists(networks.path)) { dir.create(networks.path) }
+
+source(file.path(project.path, "R/SSM_Model_NetLogo.R"))
+source(file.path(project.path, "R/SSM_Model_Networks.R"))
+source(file.path(project.path, "R/SSM_Model_Data_Cleaning.R"))
+source(file.path(project.path, "R/SSM_Model_Output.R"))
+
+## run simulations in NetLogo
+Sys.setenv(NOAWT=1)  # need to set this to run headless
+NLStart(nl.path, gui=FALSE)
+NLLoadModel(model.path)
+```
+
+```{r run_model}
+## Insert code to run a model in this chunk. For example:
+# results <- 
+#   replicate(10, generateNetwork(10000, 500), simplify = FALSE) %>% 
+#   generateNetworkFiles(dir = networks.path) %>% 
+#   runSimulations() 
+## Then, save and plot results. For example:
+# results %>% pollSupport() %>% plotPoll()
+# ggsave(file.path(project.path, "plots", "results.png"))
+```
+
+```{r quit_model, message=FALSE, warning=FALSE, echo=FALSE}
+## This code chunk quits NetLogo. Taken from SSM_Model_Main.R.
+NLQuit()
+Sys.unsetenv("NOAWT")  # unset environment variable
+```

@@ -1,0 +1,8 @@
+lambda: 1.5
+pct: 4
+num_nodes: 100000
+homophily: FALSE
+allies: TRUE
+degree: 20
+support_dist: distributeSupport1988(stdev = c(.2, .2, .2, .2, .2))
+max_ticks: 400
