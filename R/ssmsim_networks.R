@@ -25,17 +25,13 @@ generateNetworkFiles <- function(g.list, dir = getwd(), subdir = "network_files"
   network.file.names  
 }
 
-generateNetwork <- function(num.nodes = 1000, num.lgbts = 50, nei = 2, 
+generateNetwork <- function(num.nodes = 1000, num.lgbts = 50,
+                            sampleNetwork = sample_smallworld_wrapper(),
                             distributeTrait = distributeTraitRandomly(), 
                             distributeSupport = distributeSupportNormally()) {
   
-  ## generate a Watts-Strogatz small world network
-  g <- sample_smallworld(1, num.nodes, nei, 0.10)
-  
-  ## make random nodes LGBT
-#   V(g)[sample(1:num.nodes, num.lgbts)]$breed <- "lgbts"  # for NetLogo
-#   V(g)$type <- ifelse(V(g)$breed %in% "lgbts", 1, 2)  # for igraph
-  # use `%in%` rather than `==` so NAs are set to 2
+  ## generate a network of the selected type
+  g <- sampleNetwork(num.nodes)
   
   ## assign trait to some nodes based on selected distribution
   g <- distributeTrait(g, num.nodes, num.lgbts)
@@ -249,4 +245,34 @@ plotGraphSupport <- function(g) {
        vertex.size = 2, 
        vertex.frame.color = adjustcolor("white", alpha.f = 0), 
        edge.color = adjustcolor("darkgrey", alpha.f = .2))
+}
+
+sample_smallworld_wrapper <- function(dim = 1, nei = 2, p = 0.10) {
+  function(num.nodes) {
+    sample_smallworld(dim = dim, size = num.nodes, nei = nei, p = p)
+  }
+}
+
+sample_gnp_wrapper <- function(p) {
+  ## p is approx average degree / (num.nodes - 1)
+  function(num.nodes) {
+    sample_gnp(n = num.nodes, p = p)
+  }
+}
+
+sample_gnm_wrapper <- function(nei = 2) {
+  ## nei is average degree / 2
+  ## just like for sample_smallworld()
+  function(num.nodes) {
+    sample_gnm(num.nodes, num.nodes*nei)
+  }
+}
+
+sample_pa_wrapper <- function(nei = 2) {
+  ## m is the number of edges to add in each time step
+  ## where the number of time steps is the number of nodes - 1
+  ## so m = nei = average degree / 2
+  function(num.nodes) {
+    sample_pa(n = num.nodes, m = nei, directed = FALSE)
+  }
 }
