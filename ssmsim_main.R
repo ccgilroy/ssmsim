@@ -24,19 +24,22 @@ r.path <- file.path(project.path, "R")
 model.path <- file.path(nl.path, "ssmsim.nlogo")
 
 run.config <- yaml.load_file(file.path(project.path, "run_config.yml"))
-run.path <- file.path(project.path, run.config$run_path[1])
 
 ## TODO: add loop or vectorization so that the model runs for each run path
+for (run in run.config$run_path) {
+  run.path <- file.path(project.path, run)
+}
+run.path <- file.path(project.path, run.config$run_path[1])
 
 config <- yaml.load_file(file.path(run.path, "ssmsim_config.yml"))
 
-networks.path <- file.path(run.path, "networks")
-plots.path <- file.path(run.path, "plots")
-output.path <- file.path(run.path, "output")
-
-if (!dir.exists(networks.path)) { dir.create(networks.path) }
-if (!dir.exists(plots.path)) { dir.create(plots.path) }
-if (!dir.exists(output.path)) { dir.create(output.path) }
+# networks.path <- file.path(run.path, "networks")
+# plots.path <- file.path(run.path, "plots")
+# output.path <- file.path(run.path, "output")
+# 
+# if (!dir.exists(networks.path)) { dir.create(networks.path) }
+# if (!dir.exists(plots.path)) { dir.create(plots.path) }
+# if (!dir.exists(output.path)) { dir.create(output.path) }
 
 source(file.path(r.path, "ssmsim_netlogo.R"))
 source(file.path(r.path, "ssmsim_networks.R"))
@@ -77,7 +80,7 @@ gs <- replicate(config$runs,
 #                      sampleNetwork = network_type,
 #                      distributeTrait = trait_dist, 
 #                      distributeSupport = support_dist)
-fs <- generateNetworkFiles(gs, dir = networks.path)
+fs <- generateNetworkFiles(gs, dir = run.path, subdir = "")
 
 results <- 
   runSimulations(fs, 
@@ -121,7 +124,7 @@ poll.plot <-
   plotPoll(num.nodes=.01*config$num_nodes) + geom_line() + 
   ggtitle(poll.plot.title)
 poll.plot.file.name <- 
-  file.path(plots.path, 
+  file.path(run.path, 
             paste0("poll_plot_", run.name, ".png"))
 ggsave(filename = poll.plot.file.name, 
        plot = poll.plot, 
@@ -139,7 +142,7 @@ support.plot <-
   plotSupport(ticks = c(1, seq(50, config$max_ticks, by = 50))) + 
   ggtitle(support.plot.title)
 support.plot.file.name <- 
-  file.path(plots.path, 
+  file.path(run.path, 
             paste0("support_plot_", run.name, ".png"))
 ggsave(filename = support.plot.file.name, 
        plot = support.plot, 
@@ -190,7 +193,7 @@ metrics <-
 #   Map(paste0, names(config[1:6]), config[1:6]) %>% 
 #   Reduce(function(x, y) paste(x, y, sep = "_"), x = .) %>%
 #   paste(., "csv", sep = ".")
-metrics.file.name <- file.path(output.path, 
+metrics.file.name <- file.path(run.path, 
                                paste(run.name, "csv", sep = "."))
 write.csv(metrics, file = metrics.file.name, 
           row.names = FALSE)
