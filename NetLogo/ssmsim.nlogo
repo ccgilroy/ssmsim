@@ -517,7 +517,7 @@ PENS
 @#$#@#$#@
 ## WHAT IS IT?
 
-(a general understanding of what the model is trying to show or explain)
+This model should be run from an R script using RNetLogo. It is not intended to run as a standalone model. Please see README.md for a further explanation.
 
 ## HOW IT WORKS
 

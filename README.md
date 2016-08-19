@@ -4,9 +4,13 @@ The SSM ("Same-Sex Marriage") Simulation (*ssmsim*) model is an agent-based mode
 
 The prototypical case examined in this model is interaction between LGBT-identified people "coming out" to members of their social network and the subsequent change in how supportive those social ties are, both toward their LGBT tie specifically and toward LGBT rights in general. It is hypothesized that this micro-level process partially explains the recent rise in support for same-sex marriage on the national level in the United States, concomitant with the U.S. Supreme Court's 2015 ruling, Obergefell v. Hodges, guaranteeing the right to marry to same-sex couples.
 
+Authors: The authors of this project are Dr. Kate Stovel and Connor Gilroy at the University of Washington. If you have questions about the code, please contact Connor Gilroy at cgilroy[at]uw[dot]edu.
+
+License: (TODO: add licensing information.) NetLogo (Wilensky 1999) is licensed under GPLv2.
+
 ## Conceptual Overview
 
-Agents are nodes in a network connected by static edges, representing strong ties of kinship and friendship. The network is a small world (Watts and Strogatz 1998), with a high clustering coefficient and low average path length. The relevant trait ("LGBT") is randomly distributed among a small percentage of the agents. Agents' views of the trait ("support") are also randomly distributed, using numeric values from a specified distribution.   
+Agents are nodes in a network connected by static edges, representing strong ties of kinship and friendship. The default network is a small world (Watts and Strogatz 1998), with a high clustering coefficient and low average path length. The relevant trait ("LGBT") is randomly distributed among a small percentage of the agents. Agents' views of the trait ("support") are also randomly distributed, using numeric values from a specified distribution.   
 
 A model run is a discrete series of timepoints ("ticks"). At each tick, the following may happen:
 
@@ -36,7 +40,7 @@ create networks -> run model -> plot and save summaries of results
 
 The relevant functions are organized into the following R source files:
 
-`ssmsim_networks.R`: Functions that build and save `igraph` networks in the graphML format, to be imported into NetLogo. This is where the size of the networks and the distribution of support are specified.
+`ssmsim_networks.R`: Functions that build and save `igraph` networks in the graphML format, to be imported into NetLogo. This is where the size of the networks, the structure of the networks, and the distribution of support and the trait are specified.
 
 `ssmsim_netlogo.R`: Functions that interact with NetLogo using `RNetLogo`, issuing NetLogo commands and returning the values that NetLogo reports as a data frame. This is where which NetLogo commands to use for agent actions are specified.
 
@@ -51,3 +55,15 @@ In addition, code to start up NetLogo through R and source the above R files exi
 The model in NetLogo relies on importing a network generated in R using `nw:load-graphml`. This is much more efficient than attempting to generate the network in NetLogo.
 
 The model contains multiple commands (functions) describing possible actions agents might take. These must be bound to variable names as tasks (first-class functions) in R before the model is run.
+
+This directory also includes the .jar file for NetLogo 5.2.1, the `nw` and `profiler` NetLogo extensions, and the other Java libraries necessary to run NetLogo.
+
+## Main Model Runs (`./model_runs`)
+
+These model runs are executed with `ssmsim_main.R`.
+
+TODO
+
+## Sensitivity Analyses (`./sensitivity_analyses`)
+
+TODO
