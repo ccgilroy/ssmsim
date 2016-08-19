@@ -1,0 +1,10 @@
+lambda: 2
+pct: 4
+num_nodes: 100000
+homophily: FALSE
+allies: TRUE
+degree: 20
+max_ticks: 400
+runs: 1
+support_dist: distributeSupport1988(stdev = c(.2, .2, .2, .2, .2))
+network_type: do.call(sample_smallworld_wrapper, args = list(dim = 1, nei = floor(config$degree/2), p = 0.10))
