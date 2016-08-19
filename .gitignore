@@ -7,10 +7,8 @@
 *.graphml
 *.html
 *.png
+*.csv
 # ignore these directories
-other/
-zz_archive/
 networks/
 plots/
 output/
-vignettes/*_cache/

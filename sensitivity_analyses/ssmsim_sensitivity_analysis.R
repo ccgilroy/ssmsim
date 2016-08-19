@@ -14,6 +14,7 @@ library(stringr)
 library(ggplot2)
 library(igraph)
 library(yaml)
+library(lattice)
 
 ## Note that you shouldn't change the working directory after
 ## starting NetLogo
@@ -30,6 +31,9 @@ source(file.path(r.path, "ssmsim_output.R"))
 
 run.config <- yaml.load_file(file.path(sa.path, "run_config.yml"))
 run <- run.config$run_path[1]
+run.path <- file.path(sa.path, run)
+## read config file with parameters for specific set of model runs
+config <- yaml.load_file(file.path(sa.path, "sensitivity_analysis_config.yml"))
 
 ## Each run path has a different yaml config file 
 ## with a different set of parameters
@@ -41,10 +45,6 @@ parameter.space <-
 ## Output each run to a separate csv file
 files <- 
   Map(function(lambda, pct) { 
-    run.path <- file.path(sa.path, run)
-    ## read config file with parameters for specific set of model runs
-    config <- yaml.load_file(file.path(sa.path, "sensitivity_analysis_config.yml"))
-    
     ## run simulations in NetLogo
     Sys.setenv(NOAWT=1)  # need to set this to run headless
     NLStart(nl.path, gui=FALSE)
@@ -149,7 +149,7 @@ plot.title <-
     config$homophily,
     config$allies
   )
-png(filename = file.path(run.path, paste0("surface_plot_", sa.name, ".csv")), 
+png(filename = file.path(run.path, paste0("surface_plot_", sa.name, ".png")), 
     width = 8, height = 5, units = "in", res = 300)
 wireframe(value ~ lambda * percent, data = data_max, 
           zlab = list("max proportion supportive", rot = 90), 
