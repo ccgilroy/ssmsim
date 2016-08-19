@@ -16,6 +16,9 @@ library(igraph)
 library(yaml)
 library(lattice)
 
+## This code should be run from the ssmsim project directory
+## Otherwise, set the project path manually, e.g.
+# project.path <- "/Users/cgilroy/Documents/Research/ssmsim"
 ## Note that you shouldn't change the working directory after
 ## starting NetLogo
 project.path <- getwd()

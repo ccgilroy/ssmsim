@@ -15,6 +15,8 @@ library(ggplot2)
 library(igraph)
 library(yaml)
 
+## This code should be run from the ssmsim project directory
+## Otherwise, set the project path manually, e.g.
 # project.path <- "/Users/cgilroy/Documents/Research/ssmsim"
 ## Note that you shouldn't change the working directory after
 ## starting NetLogo
@@ -33,7 +35,7 @@ run.config <- yaml.load_file(file.path(project.path, "run_config.yml"))
 ## Each run path has a different yaml config file 
 ## with a different set of parameters
 lapply(run.config$run_path, function(run) { 
-  run.path <- file.path(project.path, run)
+  run.path <- file.path(project.path, "model_runs", run)
   ## read config file with parameters for specific set of model runs
   config <- yaml.load_file(file.path(run.path, "ssmsim_config.yml"))
   
