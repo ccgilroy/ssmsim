@@ -1,2 +1,2 @@
 run_path:
-    - sensitivity_analysis_num_nodes100000_homophilyFALSE_alliesTRUE_degree20
+    - sensitivity_analysis_num_nodes100000_homophilyTRUE_alliesTRUE_degree20
