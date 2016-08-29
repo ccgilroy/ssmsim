@@ -36,7 +36,7 @@ run.config <- yaml.load_file(file.path(sa.path, "run_config.yml"))
 run <- run.config$run_path[1]
 run.path <- file.path(sa.path, run)
 ## read config file with parameters for specific set of model runs
-config <- yaml.load_file(file.path(sa.path, "sensitivity_analysis_config.yml"))
+config <- yaml.load_file(file.path(run.path, "sensitivity_analysis_config.yml"))
 
 ## Each run path has a different yaml config file 
 ## with a different set of parameters
