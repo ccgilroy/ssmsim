@@ -30,7 +30,8 @@ pollSupport <- function(model_df, mid_break = .33) {
     ) %>% 
     select(run, tick, low_support, mid_support, high_support) %>%
     gather(key = support_level, value = count, 
-           high_support, mid_support, low_support)
+           high_support, mid_support, low_support, 
+           factor_key = TRUE)
 }
 
 sampleSupport <- function(model_df, sample_proportion = .01) {

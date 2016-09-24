@@ -43,6 +43,11 @@ plotRunsSeparate <- function(results) {
 }
 
 plotPoll <- function(poll_df, num.nodes = 10000) {
+  
+  ## Colors from endpoints of RColorBrewer::brewer.pal(5, "RdBu")
+  ## With the middle shade manually made darker
+  colors <- c("#CA0020", "#7b7b7b", "#0571B0")
+  
   ggplot(poll_df, aes(x = tick, y = count/num.nodes, color = support_level)) + 
     geom_point() + 
     ylim(0, 1) +
@@ -51,8 +56,9 @@ plotPoll <- function(poll_df, num.nodes = 10000) {
     ggtitle("Support Poll") + 
     theme_minimal() + 
     theme(legend.title=element_blank()) + 
-    scale_color_hue(breaks = c("high_support", "mid_support", "low_support"), 
-                    labels = c("Supportive", "Neutral", "Opposed"))
+    scale_color_manual(breaks = c("high_support", "mid_support", "low_support"), 
+                    labels = c("Supportive", "Neutral", "Opposed"), 
+                    values = rev(colors))
 #     scale_color_hue(breaks = c("low_support", "mid_support", "high_support"), 
 #                     labels = c("Opposed", "Neutral", "Supportive"))
 }

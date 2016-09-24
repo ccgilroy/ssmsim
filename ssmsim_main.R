@@ -104,10 +104,13 @@ lapply(run.config$run_path, function(run) {
     ggtitle(poll.plot.title)
   poll.plot.file.name <- 
     file.path(run.path, 
-              paste0("poll_plot_", run.name, ".png"))
-  ggsave(filename = poll.plot.file.name, 
+              paste0("poll_plot_", run.name))
+  ggsave(filename = paste0(poll.plot.file.name, ".png"), 
          plot = poll.plot, 
          width = 8, height = 5)
+  ## Save gg object so that plots can be grouped and modified later 
+  saveRDS(object = poll.plot,
+          file = paste0(poll.plot.file.name, ".Rds"))
   
   support.plot.title <- 
     sprintf(

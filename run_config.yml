@@ -7,4 +7,6 @@ run_path:
     - gnm_lambda2_pct4_num_nodes100000_homophilyTRUE_alliesTRUE_degree20
     - pa_lambda2_pct4_num_nodes100000_homophilyFALSE_alliesTRUE_degree20
     - pa_lambda2_pct4_num_nodes100000_homophilyTRUE_alliesTRUE_degree20
+    - gnm_lambda2_pct4_num_nodes100000_homophilyFALSE_alliesFALSE_degree20
+    - pa_lambda2_pct4_num_nodes100000_homophilyFALSE_alliesFALSE_degree20
 #    - smallworld_lambda2_pct4_num_nodes1000000_homophilyFALSE_alliesTRUE_degree20
