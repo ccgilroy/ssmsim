@@ -17,6 +17,7 @@ globals [
   support-threshold
   out-threshold
   lambda  ;; mean of Poisson distribution for how many neighbors an LGBT person comes out to
+  target-order  ;; order in which LGBT agent chooses neighbors to come out to: "random" or "descending" (by support)
 ]
 
 lgbts-own [
@@ -99,8 +100,15 @@ to come-out
    if (n-target > count link-neighbors) [ set n-target count link-neighbors ]
 
    set out true
-   ask n-of n-target link-neighbors [ run response-function ]
 
+   ;; how do the LGBT agents select which neighbors to come out to?
+   ;; either at random, or in descending order of support
+   ifelse (target-order = "random")
+   [ ask n-of n-target link-neighbors [ run response-function ] ]
+   [ ifelse (target-order = "descending")
+     [ ask max-n-of n-target link-neighbors [support] [ run response-function ] ]
+     [ ask n-of n-target link-neighbors [ run response-function ] ]  ;; default case = same as random
+   ]
   ]
 end
 

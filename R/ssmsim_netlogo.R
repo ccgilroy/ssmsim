@@ -6,7 +6,8 @@ runModel <- function(network_file, ticks = 100,
                      response.fn = "respond-max", 
                      coming.out.delay = 0, 
                      ally.delay = 0, 
-                     lambda = 1.5) {
+                     lambda = 1.5, 
+                     target.order = "default") {
   NLCommand("setup")
   NLCommand(paste0("nw:load-graphml \"", network_file, "\"")) 
   NLCommand("set-starting-conditions")
@@ -16,6 +17,7 @@ runModel <- function(network_file, ticks = 100,
   NLCommand("set coming-out-delay ", coming.out.delay)
   NLCommand("set ally-delay ", ally.delay)
   NLCommand("set lambda ", lambda)
+  NLCommand(paste0("set target-order \"", target.order, "\""))
   NLDoReport(ticks, "go", 
              c("ticks", 
                "map [[who] of ?] sort turtles", "list-support", 
@@ -35,12 +37,13 @@ runSimulations <- function(network_files, ticks = 100,
                            response.fn = "respond-max", 
                            coming.out.delay = 0, 
                            ally.delay = 0, 
-                           lambda = 1.5) {
+                           lambda = 1.5, 
+                           target.order = "default") {
   # setupModel(out, support)
   bind_rows(lapply(network_files, runModel, ticks = ticks, growth.fn = growth.fn, 
                    random.fn = random.fn, response.fn = response.fn, 
                    coming.out.delay = coming.out.delay, ally.delay = ally.delay, 
-                   lambda = lambda), 
+                   lambda = lambda, target.order = target.order), 
             .id = "run")
 }
 

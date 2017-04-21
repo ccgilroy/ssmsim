@@ -54,6 +54,7 @@ lapply(run.config$run_path, function(run) {
   support_dist <- eval(parse(text = config$support_dist))
   network_type <- eval(parse(text = config$network_type))
   num_lgbts <- floor(config$pct/100 * config$num_nodes)
+  target_order <- if(!is.null(config$target_order)) config$target_order else "default"
   
   gs <- replicate(config$runs, 
                   generateNetwork(num.nodes = config$num_nodes, 
@@ -73,7 +74,8 @@ lapply(run.config$run_path, function(run) {
                    response.fn = "respond-transition-matrix", 
                    coming.out.delay = 0, 
                    ally.delay = ally_delay, 
-                   lambda = config$lambda)
+                   lambda = config$lambda, 
+                   target.order = target_order)
   
   NLQuit()
   Sys.unsetenv("NOAWT")  # unset environment variable
